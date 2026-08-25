@@ -1,0 +1,8 @@
+asgiref
+Django
+openpyxl
+Pillow
+python-dotenv
+qrcode
+reportlab
+requests

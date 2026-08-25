@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Thank You For Visiting Food Lab</title>
+</head>
+<body style="margin:0;background:#f8f3ef;font-family:Arial,Helvetica,sans-serif;color:#231f20;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f8f3ef;padding:28px 12px;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #eadbd4;">
+                    <tr>
+                        <td style="background:#8b1e3f;padding:28px;text-align:center;color:#ffffff;">
+                            {% if logo_url %}
+                                <img src="{{ logo_url }}" alt="Food Lab" width="96" style="display:block;margin:0 auto 14px;border-radius:12px;">
+                            {% endif %}
+                            <h1 style="margin:0;font-size:28px;line-height:1.25;">Thank You For Visiting Food Lab</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px;">
+                            <p style="font-size:18px;margin:0 0 14px;">Hi {{ customer.name }},</p>
+                            <p style="font-size:16px;line-height:1.7;margin:0 0 24px;">
+                                Thank you for choosing Food Lab. We hope you enjoyed your meal and had a wonderful experience with us.
+                            </p>
+                            {% if bill %}
+                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:0 0 24px;border:1px solid #eadbd4;">
+                                    <tr>
+                                        <td colspan="2" style="padding:12px 14px;background:#f8f3ef;font-weight:bold;">Bill Summary</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;">Bill Number</td>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;text-align:right;">{{ bill.bill_number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;">Subtotal</td>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;text-align:right;">Rs. {{ bill.subtotal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;">GST</td>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;text-align:right;">Rs. {{ bill.gst_amount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;">Discount</td>
+                                        <td style="padding:10px 14px;border-top:1px solid #eadbd4;text-align:right;">Rs. {{ bill.discount_amount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:12px 14px;border-top:1px solid #eadbd4;font-weight:bold;">Grand Total</td>
+                                        <td style="padding:12px 14px;border-top:1px solid #eadbd4;text-align:right;font-weight:bold;">Rs. {{ bill.grand_total }}</td>
+                                    </tr>
+                                </table>
+                            {% endif %}
+                            <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 24px;">
+                                <tr>
+                                    <td style="border-radius:10px;background:#f4b400;text-align:center;">
+                                        <a href="{{ google_review_url }}" style="display:inline-block;padding:14px 22px;color:#231f20;text-decoration:none;font-weight:bold;font-size:16px;">&#11088;&#11088;&#11088;&#11088;&#11088;<br>Leave us a Review</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 24px;">
+                                <tr>
+                                    <td style="border-radius:10px;background:#d62976;text-align:center;">
+                                        <a href="{{ instagram_url }}" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-weight:bold;font-size:16px;">Follow us on Instagram<br>@{{ instagram_username }}</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="font-size:15px;line-height:1.6;margin:0 0 12px;">Scan our Instagram QR:</p>
+                            <img src="cid:{{ instagram_qr_content_id }}" alt="Food Lab Instagram QR" width="160" style="display:block;border:1px solid #eadbd4;border-radius:12px;padding:8px;background:#ffffff;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:22px 32px;background:#231f20;color:#ffffff;text-align:center;font-size:14px;line-height:1.6;">
+                            Food Lab<br>
+                            Thank you for dining with us. See you again soon.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

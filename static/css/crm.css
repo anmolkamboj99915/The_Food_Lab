@@ -1,0 +1,116 @@
+:root {
+    --foodlab-wine: #8b1e3f;
+    --foodlab-coral: #d95d39;
+    --foodlab-ink: #231f20;
+    --foodlab-paper: #f8f3ef;
+    --foodlab-line: #eadbd4;
+}
+
+body {
+    background: var(--foodlab-paper);
+    color: var(--foodlab-ink);
+}
+
+.crm-navbar {
+    background: linear-gradient(90deg, var(--foodlab-wine), #3a1d32);
+}
+
+.crm-page {
+    min-height: calc(100vh - 56px);
+}
+
+.btn-primary {
+    background: var(--foodlab-wine);
+    border-color: var(--foodlab-wine);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #6f1732;
+    border-color: #6f1732;
+}
+
+.btn-outline-primary {
+    color: var(--foodlab-wine);
+    border-color: var(--foodlab-wine);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background: var(--foodlab-wine);
+    border-color: var(--foodlab-wine);
+}
+
+.metric-card,
+.crm-panel {
+    background: #ffffff;
+    border: 1px solid var(--foodlab-line);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(35, 31, 32, 0.06);
+}
+
+.metric-card {
+    min-height: 122px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.metric-card span,
+.detail-label {
+    color: #75696c;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.metric-card strong {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.crm-panel {
+    padding: 24px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--foodlab-coral);
+    box-shadow: 0 0 0 0.2rem rgba(217, 93, 57, 0.15);
+}
+
+.errorlist {
+    color: #b42318;
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    font-size: 0.875rem;
+}
+
+.detail-label {
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.table a {
+    color: var(--foodlab-wine);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media (max-width: 575.98px) {
+    .crm-panel {
+        padding: 18px;
+    }
+
+    .btn-group {
+        display: grid;
+        gap: 0.35rem;
+    }
+
+    .btn-group > .btn {
+        border-radius: 6px !important;
+    }
+}

@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% block title %}Delete Bill {{ bill.bill_number }} | Food Lab CRM{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <section class="crm-panel">
+            <h1 class="h4 fw-bold mb-3">Delete Bill</h1>
+            <p>
+                Are you sure you want to delete bill
+                <strong>{{ bill.bill_number }}</strong> for <strong>{{ customer.name }}</strong>?
+                This will remove this bill and its notification history.
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex gap-2">
+                    <button class="btn btn-danger" type="submit">Delete Bill</button>
+                    <a class="btn btn-outline-secondary" href="{{ customer.get_absolute_url }}">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

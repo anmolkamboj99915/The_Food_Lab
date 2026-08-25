@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+{% block title %}Food Lab Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+    <div>
+        <p class="text-uppercase text-muted fw-semibold small mb-1">Restaurant Customer Engagement CRM</p>
+        <h1 class="h2 fw-bold mb-0">Food Lab Dashboard</h1>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-primary" href="{% url 'customers:create' %}">Add Customer</a>
+        <a class="btn btn-outline-primary" href="{% url 'customers:list' %}">Customer List</a>
+        <a class="btn btn-outline-dark" href="{% url 'customers:export' %}">Export Excel</a>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl">
+        <div class="metric-card">
+            <span>Today's Customers</span>
+            <strong>{{ stats.todays_customers }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl">
+        <div class="metric-card">
+            <span>Today's Bills</span>
+            <strong>{{ stats.todays_bills }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl">
+        <div class="metric-card">
+            <span>Revenue</span>
+            <strong>Rs. {{ stats.revenue }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl">
+        <div class="metric-card">
+            <span>WhatsApp Delivered</span>
+            <strong>{{ stats.whatsapp_delivered }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl">
+        <div class="metric-card">
+            <span>Emails Delivered</span>
+            <strong>{{ stats.emails_delivered }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl">
+        <div class="metric-card">
+            <span>Review Requests Sent</span>
+            <strong>{{ stats.review_requests_sent }}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <section class="crm-panel">
+            <h2 class="h5 fw-bold mb-3">Save Customer</h2>
+            <form method="post" action="{% url 'customers:create' %}" novalidate>
+                {% include 'customers/_customer_form_fields.html' %}
+                <button class="btn btn-primary w-100 mt-4" type="submit">Save Customer</button>
+            </form>
+        </section>
+    </div>
+    <div class="col-lg-7">
+        <section class="crm-panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 fw-bold mb-0">Recent Customers</h2>
+                <a href="{% url 'customers:list' %}" class="link-primary text-decoration-none">View all</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Visit</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for customer in recent_customers %}
+                            <tr>
+                                <td><a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a></td>
+                                <td>{{ customer.phone }}</td>
+                                <td>{{ customer.visit_date }}</td>
+                                <td>
+                                    <span class="badge text-bg-{% if customer.email_sent %}success{% else %}secondary{% endif %}">Email</span>
+                                    <span class="badge text-bg-{% if customer.whatsapp_sent %}success{% else %}secondary{% endif %}">WhatsApp</span>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="4" class="text-muted">No customers saved yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

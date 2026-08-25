@@ -1,0 +1,66 @@
+{% csrf_token %}
+<div class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.name.id_for_label }}">Customer Name</label>
+        {{ form.name }}
+        {{ form.name.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.phone.id_for_label }}">Mobile Number</label>
+        {{ form.phone }}
+        {{ form.phone.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.bill_amount.id_for_label }}">Bill Amount</label>
+        {{ form.bill_amount }}
+        {{ form.bill_amount.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.table_number.id_for_label }}">Table Number</label>
+        {{ form.table_number }}
+        {{ form.table_number.errors }}
+    </div>
+    {% if form.show_bill_fields %}
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.bill_number.id_for_label }}">Bill Number</label>
+        {{ form.bill_number }}
+        {{ form.bill_number.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.gst.id_for_label }}">GST %</label>
+        {{ form.gst }}
+        {{ form.gst.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.discount.id_for_label }}">Discount</label>
+        {{ form.discount }}
+        {{ form.discount.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.visit_date.id_for_label }}">Visit Date</label>
+        {{ form.visit_date }}
+        {{ form.visit_date.errors }}
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="{{ form.payment_mode.id_for_label }}">Payment Mode</label>
+        {{ form.payment_mode }}
+        {{ form.payment_mode.errors }}
+    </div>
+    <div class="col-12">
+        <label class="form-label" for="{{ form.items_ordered.id_for_label }}">Items Ordered</label>
+        {{ form.items_ordered }}
+        {{ form.items_ordered.errors }}
+        <div class="form-text">Enter one item per line: Item name, quantity, price</div>
+    </div>
+    {% endif %}
+    <div class="col-12">
+        <label class="form-label" for="{{ form.notes.id_for_label }}">Notes</label>
+        {{ form.notes }}
+        {{ form.notes.errors }}
+    </div>
+</div>

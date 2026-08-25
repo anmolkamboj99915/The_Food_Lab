@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+{% block title %}Customer List | Food Lab CRM{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+    <h1 class="h3 fw-bold mb-0">Customer List</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="{% url 'customers:create' %}">Add Customer</a>
+        <a class="btn btn-outline-dark" href="{% url 'customers:export' %}?search={{ search }}&status={{ status }}&sort={{ sort }}">Export Excel</a>
+    </div>
+</div>
+
+<section class="crm-panel mb-4">
+    <form method="get" class="row g-3 align-items-end">
+        <div class="col-md-5">
+            <label class="form-label" for="search">Search</label>
+            <input class="form-control" id="search" type="search" name="search" value="{{ search }}" placeholder="Name, phone, email, table">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="status">Filter</label>
+            <select class="form-select" id="status" name="status">
+                <option value="">All customers</option>
+                <option value="email_sent" {% if status == 'email_sent' %}selected{% endif %}>Emails sent</option>
+                <option value="whatsapp_sent" {% if status == 'whatsapp_sent' %}selected{% endif %}>WhatsApp sent</option>
+                <option value="pending_email" {% if status == 'pending_email' %}selected{% endif %}>Pending email</option>
+                <option value="pending_whatsapp" {% if status == 'pending_whatsapp' %}selected{% endif %}>Pending WhatsApp</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="sort">Sort</label>
+            <select class="form-select" id="sort" name="sort">
+                <option value="-visit_date" {% if sort == '-visit_date' %}selected{% endif %}>Newest visit</option>
+                <option value="visit_date" {% if sort == 'visit_date' %}selected{% endif %}>Oldest visit</option>
+                <option value="name" {% if sort == 'name' %}selected{% endif %}>Name A-Z</option>
+                <option value="-bill_amount" {% if sort == '-bill_amount' %}selected{% endif %}>Highest bill</option>
+                <option value="-created_at" {% if sort == '-created_at' %}selected{% endif %}>Recently added</option>
+            </select>
+        </div>
+        <div class="col-md-1 d-grid">
+            <button class="btn btn-primary" type="submit">Go</button>
+        </div>
+    </form>
+</section>
+
+<section class="crm-panel">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Bill</th>
+                    <th>Table</th>
+                    <th>Visit Date</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in page_obj %}
+                    <tr>
+                        <td class="fw-semibold">{{ customer.name }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.email|default:'-' }}</td>
+                        <td>{% if customer.bill_amount %}Rs. {{ customer.bill_amount }}{% else %}-{% endif %}</td>
+                        <td>{{ customer.table_number|default:'-' }}</td>
+                        <td>{{ customer.visit_date }}</td>
+                        <td>
+                            <span class="badge text-bg-{% if customer.email_sent %}success{% else %}secondary{% endif %}">Email</span>
+                            <span class="badge text-bg-{% if customer.whatsapp_sent %}success{% else %}secondary{% endif %}">WhatsApp</span>
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a class="btn btn-outline-primary" href="{{ customer.get_absolute_url }}">View</a>
+                                <a class="btn btn-outline-success" href="{% url 'customers:bill_create' customer.pk %}">New Bill</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'customers:edit' customer.pk %}">Edit</a>
+                                <a class="btn btn-outline-danger" href="{% url 'customers:delete' customer.pk %}">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="8" class="text-center text-muted py-4">No customers found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <nav aria-label="Customer pagination">
+            <ul class="pagination justify-content-end mb-0">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ search }}&status={{ status }}&sort={{ sort }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ search }}&status={{ status }}&sort={{ sort }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</section>
+{% endblock %}

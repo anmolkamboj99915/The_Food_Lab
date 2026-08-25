@@ -1,0 +1,171 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ customer.name }} | Food Lab CRM{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+    <div>
+        <p class="text-muted mb-1">Customer Details</p>
+        <h1 class="h3 fw-bold mb-0">{{ customer.name }}</h1>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" href="{% url 'customers:list' %}">Customer List</a>
+        <a class="btn btn-success" href="{% url 'customers:bill_create' customer.pk %}">Add New Bill</a>
+        <a class="btn btn-primary" href="{% url 'customers:edit' customer.pk %}">Edit</a>
+        <a class="btn btn-outline-danger" href="{% url 'customers:delete' customer.pk %}">Delete</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <section class="crm-panel h-100">
+            <h2 class="h5 fw-bold mb-3">Customer</h2>
+            <div class="row g-4">
+                <div class="col-md-6"><span class="detail-label">Mobile Number</span><strong>{{ customer.phone }}</strong></div>
+                <div class="col-md-6"><span class="detail-label">Email Address</span><strong>{{ customer.email|default:'-' }}</strong></div>
+                <div class="col-md-6"><span class="detail-label">Table Number</span><strong>{{ customer.table_number|default:'-' }}</strong></div>
+                <div class="col-md-6"><span class="detail-label">Visit Date</span><strong>{{ customer.visit_date }}</strong></div>
+                <div class="col-md-6"><span class="detail-label">WhatsApp Status</span><strong>{% if customer.whatsapp_sent %}Delivered{% else %}Pending or Failed{% endif %}</strong></div>
+                <div class="col-md-6"><span class="detail-label">Email Status</span><strong>{% if customer.email_sent %}Delivered{% else %}Pending or Failed{% endif %}</strong></div>
+                <div class="col-12"><span class="detail-label">Notes</span><p class="mb-0">{{ customer.notes|default:'-'|linebreaksbr }}</p></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-7">
+        <section class="crm-panel h-100">
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-3">
+                <h2 class="h5 fw-bold mb-0">Latest Bill</h2>
+                {% if latest_bill %}
+                    <div class="d-flex flex-wrap gap-2">
+                        {% if latest_bill.pdf_file %}
+                            <a class="btn btn-outline-dark btn-sm" href="{% url 'customers:download_bill' latest_bill.pk %}">Download Bill</a>
+                        {% endif %}
+                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'customers:bill_edit' customer.pk latest_bill.pk %}">Edit Bill</a>
+                        <form method="post" action="{% url 'customers:resend_bill' customer.pk latest_bill.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-primary btn-sm" type="submit">Resend Bill</button>
+                        </form>
+                        <form method="post" action="{% url 'customers:resend_whatsapp' customer.pk latest_bill.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-primary btn-sm" type="submit">Resend WhatsApp</button>
+                        </form>
+                        <form method="post" action="{% url 'customers:resend_email' customer.pk latest_bill.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-primary btn-sm" type="submit">Resend Email</button>
+                        </form>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'customers:bill_delete' customer.pk latest_bill.pk %}">Delete Bill</a>
+                    </div>
+                {% endif %}
+            </div>
+            {% if latest_bill %}
+                <div class="row g-3 mb-3">
+                    <div class="col-md-4"><span class="detail-label">Bill Number</span><strong>{{ latest_bill.bill_number }}</strong></div>
+                    <div class="col-md-4"><span class="detail-label">Subtotal</span><strong>Rs. {{ latest_bill.subtotal }}</strong></div>
+                    <div class="col-md-4"><span class="detail-label">Grand Total</span><strong>Rs. {{ latest_bill.grand_total }}</strong></div>
+                    <div class="col-md-4"><span class="detail-label">GST</span><strong>{{ latest_bill.gst_percent }}% / Rs. {{ latest_bill.gst_amount }}</strong></div>
+                    <div class="col-md-4"><span class="detail-label">Discount</span><strong>Rs. {{ latest_bill.discount_amount }}</strong></div>
+                    <div class="col-md-4"><span class="detail-label">Payment</span><strong>{{ latest_bill.get_payment_mode_display }}</strong></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-end">Qty</th>
+                                <th class="text-end">Price</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in latest_bill.items.all %}
+                                <tr>
+                                    <td>{{ item.name }}</td>
+                                    <td class="text-end">{{ item.quantity }}</td>
+                                    <td class="text-end">Rs. {{ item.price }}</td>
+                                    <td class="text-end">Rs. {{ item.total }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted mb-0">No bill is linked to this customer yet.</p>
+            {% endif %}
+        </section>
+    </div>
+</div>
+
+<section class="crm-panel mt-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mb-3">
+        <h2 class="h5 fw-bold mb-0">Bill History</h2>
+        <a class="btn btn-success btn-sm align-self-start" href="{% url 'customers:bill_create' customer.pk %}">Add New Bill</a>
+    </div>
+    {% if bills %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Bill Number</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Payment</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bill in bills %}
+                        <tr>
+                            <td class="fw-semibold">{{ bill.bill_number }}</td>
+                            <td>{{ bill.bill_date }}</td>
+                            <td>
+                                {% for item in bill.items.all %}
+                                    {{ item.name }}{% if not forloop.last %}, {% endif %}
+                                {% empty %}
+                                    -
+                                {% endfor %}
+                            </td>
+                            <td>{{ bill.get_payment_mode_display }}</td>
+                            <td class="text-end">Rs. {{ bill.grand_total }}</td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    {% if bill.pdf_file %}
+                                        <a class="btn btn-outline-dark" href="{% url 'customers:download_bill' bill.pk %}">PDF</a>
+                                    {% endif %}
+                                    <a class="btn btn-outline-secondary" href="{% url 'customers:bill_edit' customer.pk bill.pk %}">Edit</a>
+                                    <a class="btn btn-outline-danger" href="{% url 'customers:bill_delete' customer.pk bill.pk %}">Delete</a>
+                                </div>
+                                <div class="d-flex justify-content-end gap-1 mt-2">
+                                    <form method="post" action="{% url 'customers:resend_whatsapp' customer.pk bill.pk %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">WhatsApp</button>
+                                    </form>
+                                    <form method="post" action="{% url 'customers:resend_email' customer.pk bill.pk %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">Email</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted mb-0">No bills have been added yet.</p>
+    {% endif %}
+</section>
+
+<section class="crm-panel mt-4">
+    <h2 class="h5 fw-bold mb-3">Latest Notification</h2>
+    {% if latest_notification %}
+        <div class="row g-3">
+            <div class="col-md-3"><span class="detail-label">Status</span><strong>{{ latest_notification.get_status_display }}</strong></div>
+            <div class="col-md-3"><span class="detail-label">WhatsApp</span><strong>{% if latest_notification.whatsapp_sent %}Delivered{% else %}Failed/Pending{% endif %}</strong></div>
+            <div class="col-md-3"><span class="detail-label">Email</span><strong>{% if latest_notification.email_sent %}Delivered{% else %}Failed/Pending{% endif %}</strong></div>
+            <div class="col-md-3"><span class="detail-label">Updated</span><strong>{{ latest_notification.updated_at }}</strong></div>
+        </div>
+    {% else %}
+        <p class="text-muted mb-0">No notification log has been created yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
