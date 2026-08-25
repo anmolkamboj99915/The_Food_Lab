@@ -21,6 +21,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('customers.urls')),
+    path('notifications/', include('notifications.urls')),
     path('admin/', admin.site.urls),
 ]
 
