@@ -3,51 +3,58 @@
 {% block content %}
 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
     <div>
-        <p class="text-uppercase text-muted fw-semibold small mb-1">Restaurant Customer Engagement CRM</p>
-        <h1 class="h2 fw-bold mb-0">Food Lab Dashboard</h1>
+        <p class="page-kicker mb-1">Restaurant Customer Engagement CRM</p>
+        <h1 class="page-title h2 mb-1">Food Lab Dashboard</h1>
+        <p class="text-muted mb-0">Bills, repeat visits, WhatsApp updates, and customer history in one place.</p>
     </div>
-    <div class="d-flex flex-wrap gap-2">
-        <a class="btn btn-primary" href="{% url 'customers:create' %}">Add Customer</a>
-        <a class="btn btn-outline-primary" href="{% url 'customers:list' %}">Customer List</a>
-        <a class="btn btn-outline-dark" href="{% url 'customers:export' %}">Export Excel</a>
+    <div class="quick-actions">
+        <a class="btn btn-primary" href="{% url 'customers:create' %}"><i class="bi bi-person-plus"></i> Add Customer</a>
+        <a class="btn btn-outline-primary" href="{% url 'customers:list' %}"><i class="bi bi-search"></i> Find Customer</a>
+        <a class="btn btn-outline-dark" href="{% url 'customers:export' %}"><i class="bi bi-download"></i> Export</a>
     </div>
 </div>
 
 <div class="row g-3 mb-4">
     <div class="col-sm-6 col-xl">
-        <div class="metric-card">
+        <div class="metric-card metric-coral">
             <span>Today's Customers</span>
             <strong>{{ stats.todays_customers }}</strong>
+            <small>Fresh visits logged today</small>
         </div>
     </div>
     <div class="col-sm-6 col-xl">
-        <div class="metric-card">
+        <div class="metric-card metric-teal">
             <span>Today's Bills</span>
             <strong>{{ stats.todays_bills }}</strong>
+            <small>Invoices generated</small>
         </div>
     </div>
     <div class="col-sm-6 col-xl">
-        <div class="metric-card">
+        <div class="metric-card metric-saffron">
             <span>Revenue</span>
             <strong>Rs. {{ stats.revenue }}</strong>
+            <small>Today's billing value</small>
         </div>
     </div>
     <div class="col-sm-6 col-xl">
-        <div class="metric-card">
+        <div class="metric-card metric-wine">
             <span>WhatsApp Delivered</span>
             <strong>{{ stats.whatsapp_delivered }}</strong>
+            <small>Successful bill sends</small>
         </div>
     </div>
     <div class="col-sm-6 col-xl">
-        <div class="metric-card">
+        <div class="metric-card metric-teal">
             <span>Emails Delivered</span>
             <strong>{{ stats.emails_delivered }}</strong>
+            <small>Customer inbox updates</small>
         </div>
     </div>
     <div class="col-sm-6 col-xl">
-        <div class="metric-card">
+        <div class="metric-card metric-coral">
             <span>Review Requests Sent</span>
             <strong>{{ stats.review_requests_sent }}</strong>
+            <small>Review nudges delivered</small>
         </div>
     </div>
 </div>
@@ -55,10 +62,13 @@
 <div class="row g-4">
     <div class="col-lg-5">
         <section class="crm-panel">
-            <h2 class="h5 fw-bold mb-3">Save Customer</h2>
+            <div class="mb-3">
+                <p class="page-kicker mb-1">Quick Billing</p>
+                <h2 class="h5 fw-bold mb-0">Save Customer</h2>
+            </div>
             <form method="post" action="{% url 'customers:create' %}" novalidate>
                 {% include 'customers/_customer_form_fields.html' %}
-                <button class="btn btn-primary w-100 mt-4" type="submit">Save Customer</button>
+                <button class="btn btn-primary w-100 mt-4" type="submit"><i class="bi bi-receipt"></i> Save Customer & Send Bill</button>
             </form>
         </section>
     </div>
@@ -66,7 +76,7 @@
         <section class="crm-panel">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="h5 fw-bold mb-0">Recent Customers</h2>
-                <a href="{% url 'customers:list' %}" class="link-primary text-decoration-none">View all</a>
+                <a href="{% url 'customers:list' %}" class="link-primary text-decoration-none fw-bold">View all</a>
             </div>
             <div class="table-responsive">
                 <table class="table align-middle">

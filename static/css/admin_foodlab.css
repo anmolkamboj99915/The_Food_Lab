@@ -1,0 +1,98 @@
+:root {
+    --primary: #7f1736;
+    --secondary: #087f7a;
+    --accent: #f4b63f;
+    --primary-fg: #fff;
+    --body-bg: #f7f1ea;
+    --body-fg: #221b1f;
+    --body-quiet-color: #746970;
+    --link-fg: #7f1736;
+    --link-hover-color: #e45f3f;
+    --header-bg: #371224;
+    --header-color: #fff;
+    --breadcrumbs-bg: #7f1736;
+}
+
+body {
+    background:
+        linear-gradient(180deg, rgba(127, 23, 54, 0.08), rgba(8, 127, 122, 0.04) 46%, transparent),
+        var(--body-bg);
+}
+
+#header {
+    box-shadow: 0 14px 36px rgba(35, 18, 25, 0.22);
+}
+
+.foodlab-admin-brand {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+}
+
+.foodlab-admin-mark {
+    align-items: center;
+    background: linear-gradient(135deg, #f4b63f, #e45f3f);
+    border-radius: 8px;
+    color: #371224;
+    display: inline-flex;
+    font-weight: 900;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+}
+
+.foodlab-admin-brand #site-name {
+    font-size: 1.25rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.foodlab-admin-brand #site-name a {
+    color: #fff;
+}
+
+.foodlab-admin-brand p {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.82rem;
+    margin: 2px 0 0;
+}
+
+#content-related,
+.module,
+.inline-group {
+    border-radius: 8px;
+    box-shadow: 0 16px 38px rgba(52, 30, 29, 0.08);
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: linear-gradient(135deg, #7f1736, #9d254b);
+    border-radius: 8px 8px 0 0;
+    font-weight: 800;
+}
+
+input[type=submit],
+.button,
+input[type=button],
+.submit-row input,
+a.button {
+    border-radius: 8px;
+    font-weight: 800;
+}
+
+.object-tools a,
+.object-tools a:link,
+.object-tools a:visited {
+    background: #087f7a;
+    border-radius: 8px;
+}
+
+.object-tools a:hover {
+    background: #066864;
+}
+
+div.breadcrumbs {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 700;
+}

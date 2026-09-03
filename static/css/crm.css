@@ -1,38 +1,119 @@
 :root {
-    --foodlab-wine: #8b1e3f;
-    --foodlab-coral: #d95d39;
-    --foodlab-ink: #231f20;
-    --foodlab-paper: #f8f3ef;
-    --foodlab-line: #eadbd4;
+    --foodlab-wine: #7f1736;
+    --foodlab-wine-dark: #371224;
+    --foodlab-coral: #e45f3f;
+    --foodlab-saffron: #f4b63f;
+    --foodlab-teal: #087f7a;
+    --foodlab-mint: #d9f4ee;
+    --foodlab-ink: #221b1f;
+    --foodlab-muted: #746970;
+    --foodlab-paper: #f7f1ea;
+    --foodlab-panel: #fffdfa;
+    --foodlab-line: #eadbd0;
+    --foodlab-soft: #fbf6f0;
+    --foodlab-shadow: 0 18px 45px rgba(52, 30, 29, 0.09);
+}
+
+* {
+    letter-spacing: 0;
 }
 
 body {
-    background: var(--foodlab-paper);
+    background:
+        linear-gradient(180deg, rgba(127, 23, 54, 0.08), rgba(8, 127, 122, 0.04) 42%, transparent 74%),
+        var(--foodlab-paper);
     color: var(--foodlab-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .crm-navbar {
-    background: linear-gradient(90deg, var(--foodlab-wine), #3a1d32);
+    background: rgba(55, 18, 36, 0.96);
+    box-shadow: 0 14px 38px rgba(35, 18, 25, 0.22);
+}
+
+.crm-brand {
+    align-items: center;
+    color: #fff !important;
+    display: inline-flex;
+    font-weight: 800;
+    gap: 0.7rem;
+}
+
+.brand-mark {
+    align-items: center;
+    background: linear-gradient(135deg, var(--foodlab-saffron), var(--foodlab-coral));
+    border-radius: 8px;
+    color: var(--foodlab-wine-dark);
+    display: inline-flex;
+    font-size: 0.86rem;
+    font-weight: 900;
+    height: 34px;
+    justify-content: center;
+    width: 34px;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.24);
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.crm-navbar .nav-link {
+    align-items: center;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    display: inline-flex;
+    font-weight: 700;
+    gap: 0.38rem;
+    padding: 0.55rem 0.78rem;
+}
+
+.crm-navbar .nav-link:hover,
+.crm-navbar .nav-link:focus {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
 }
 
 .crm-page {
-    min-height: calc(100vh - 56px);
+    min-height: calc(100vh - 60px);
 }
 
-.btn-primary {
-    background: var(--foodlab-wine);
+.page-kicker {
+    color: var(--foodlab-coral);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.page-title {
+    font-weight: 900;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 800;
+}
+
+.btn-primary,
+.btn-success {
+    background: linear-gradient(135deg, var(--foodlab-wine), #a32147);
     border-color: var(--foodlab-wine);
+    box-shadow: 0 10px 20px rgba(127, 23, 54, 0.14);
 }
 
 .btn-primary:hover,
-.btn-primary:focus {
-    background: #6f1732;
-    border-color: #6f1732;
+.btn-primary:focus,
+.btn-success:hover,
+.btn-success:focus {
+    background: linear-gradient(135deg, #67112b, var(--foodlab-wine));
+    border-color: #67112b;
 }
 
 .btn-outline-primary {
     color: var(--foodlab-wine);
-    border-color: var(--foodlab-wine);
+    border-color: rgba(127, 23, 54, 0.42);
 }
 
 .btn-outline-primary:hover,
@@ -41,52 +122,151 @@ body {
     border-color: var(--foodlab-wine);
 }
 
+.btn-outline-success {
+    color: var(--foodlab-teal);
+    border-color: rgba(8, 127, 122, 0.42);
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+    background: var(--foodlab-teal);
+    border-color: var(--foodlab-teal);
+}
+
 .metric-card,
 .crm-panel {
-    background: #ffffff;
-    border: 1px solid var(--foodlab-line);
+    background: rgba(255, 253, 250, 0.92);
+    border: 1px solid rgba(234, 219, 208, 0.95);
     border-radius: 8px;
-    box-shadow: 0 10px 24px rgba(35, 31, 32, 0.06);
-}
-
-.metric-card {
-    min-height: 122px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.metric-card span,
-.detail-label {
-    color: #75696c;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    text-transform: uppercase;
-}
-
-.metric-card strong {
-    font-size: 2rem;
-    line-height: 1;
+    box-shadow: var(--foodlab-shadow);
 }
 
 .crm-panel {
     padding: 24px;
 }
 
+.metric-card {
+    min-height: 132px;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+}
+
+.metric-card::before {
+    background: var(--metric-accent, var(--foodlab-coral));
+    content: "";
+    height: 4px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.metric-card span,
+.detail-label {
+    color: var(--foodlab-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.metric-card strong {
+    display: block;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-top: 0.7rem;
+}
+
+.metric-card small {
+    color: var(--foodlab-muted);
+    display: block;
+    margin-top: 0.55rem;
+}
+
+.metric-coral { --metric-accent: var(--foodlab-coral); }
+.metric-teal { --metric-accent: var(--foodlab-teal); }
+.metric-saffron { --metric-accent: var(--foodlab-saffron); }
+.metric-wine { --metric-accent: var(--foodlab-wine); }
+
+.form-label {
+    color: #594a50;
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin-bottom: 0.45rem;
+}
+
+.form-control,
+.form-select {
+    background-color: #fff;
+    border: 1px solid #dfcbc1;
+    border-radius: 8px;
+    min-height: 44px;
+}
+
+textarea.form-control {
+    min-height: 128px;
+}
+
 .form-control:focus,
 .form-select:focus {
     border-color: var(--foodlab-coral);
-    box-shadow: 0 0 0 0.2rem rgba(217, 93, 57, 0.15);
+    box-shadow: 0 0 0 0.22rem rgba(228, 95, 63, 0.16);
+}
+
+.form-text {
+    color: #83767c;
 }
 
 .errorlist {
     color: #b42318;
+    font-size: 0.875rem;
     list-style: none;
     margin: 0.35rem 0 0;
     padding: 0;
-    font-size: 0.875rem;
+}
+
+.table {
+    --bs-table-bg: transparent;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: var(--foodlab-soft);
+    border-bottom: 1px solid var(--foodlab-line);
+    color: #65565d;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.table tbody td {
+    border-color: rgba(234, 219, 208, 0.78);
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(244, 182, 63, 0.1);
+}
+
+.table a {
+    color: var(--foodlab-wine);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.badge {
+    border-radius: 8px;
+    font-weight: 800;
+    padding: 0.45em 0.62em;
+}
+
+.text-bg-success {
+    background-color: var(--foodlab-teal) !important;
+}
+
+.text-bg-secondary {
+    background-color: #8b7f83 !important;
 }
 
 .detail-label {
@@ -94,10 +274,64 @@ body {
     margin-bottom: 0.35rem;
 }
 
-.table a {
-    color: var(--foodlab-wine);
-    font-weight: 700;
-    text-decoration: none;
+.detail-stat {
+    background: var(--foodlab-soft);
+    border: 1px solid var(--foodlab-line);
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.bill-workspace {
+    align-items: start;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) 310px;
+}
+
+.bill-preview {
+    background: linear-gradient(180deg, #fffaf2, #ffffff);
+    border: 1px solid var(--foodlab-line);
+    border-radius: 8px;
+    padding: 18px;
+    position: sticky;
+    top: 88px;
+}
+
+.bill-preview-total {
+    border-top: 1px dashed #d8c2b7;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+.preview-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0.5rem 0;
+}
+
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.alert {
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(52, 30, 29, 0.1);
+}
+
+@media (max-width: 991.98px) {
+    .bill-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .bill-preview {
+        position: static;
+    }
 }
 
 @media (max-width: 575.98px) {
@@ -108,9 +342,19 @@ body {
     .btn-group {
         display: grid;
         gap: 0.35rem;
+        width: 100%;
     }
 
     .btn-group > .btn {
-        border-radius: 6px !important;
+        border-radius: 8px !important;
+    }
+
+    .quick-actions .btn,
+    .quick-actions form {
+        width: 100%;
+    }
+
+    .quick-actions form .btn {
+        width: 100%;
     }
 }
